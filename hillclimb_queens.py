@@ -65,10 +65,27 @@ def main():
     hc = HillClimb(size)
 
     success, boards_searched = hc.run(n, climb_method=HillClimb.find_first_better)
-    print('first choice: {}% success, avg boards checked: {}'.format(int(success*100), boards_searched))
+    print('first choice: {:.1f}% success, avg boards checked: {}'.format(success*100, boards_searched))
 
     success, boards_searched = hc.run(n, climb_method=HillClimb.find_best_child)
-    print('steepest ascent: {}% success, avg boards checked: {}'.format(int(success*100), boards_searched))
+    print('steepest ascent: {:.1f}% success, avg boards checked: {}'.format(success*100, boards_searched))
+
+    solutions = 0
+    restarts = 0
+    progress = tqdm(total=n)
+    while solutions < n:
+        success, boards_searched = hc.run(1, climb_method=HillClimb.find_first_better)
+        restarts += 1
+        if success == 1:
+            solutions += 1
+            progress.update(1)
+    progress.close()
+
+    # we're going for n solutions, and the first try for each doesn't count as a restart
+    restarts -= n
+    print('random restart: {} restarts, avg: {}'.format(restarts, restarts / n))
+
+
 
 if __name__ == '__main__':
     main()
