@@ -4,9 +4,9 @@ def evaluate(board):
     conflicts = 0
     size = len(board)
     for i in range(size):
-        for j in range(i, size):
+        for j in range(i+1, size):
             # conflicts in row and diagonal
-            if i != j and (board[i] == board[j] or j - i == abs(board[i] - board[j])):
+            if board[i] == board[j] or j - i == abs(board[i] - board[j]):
                 conflicts += 1
     return (size * (size - 1)) / 2 - conflicts
 
