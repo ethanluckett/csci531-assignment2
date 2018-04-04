@@ -20,26 +20,31 @@ def mutate(individual, rate):
         individual[index] = random.randint(0, len(individual)-1)
 
 
-def do_iteration(population, mutation_rate):
+def do_iteration(population, fitness, mutation_rate, max_fitness):
     pop_size = len(population)
     
-    fitness = list(map(evaluate, population))
-
     new_population = []
+    new_fitness = []
     for i in range(pop_size):
         [a, b] = random.choices(population, weights=fitness, k=2)
         child = crossover(a, b)
         mutate(child, mutation_rate)
+
         new_population.append(child)
 
+        f = evaluate(child)
+        if f == max_fitness:
+            return [], [], [], max_fitness
+        new_fitness.append(f)
+
     best_f = 0
-    for i in range(len(new_population)):
-        f = evaluate(new_population[i])
+    for i in range(pop_size):
+        f = fitness[i]
         if f > best_f:
             best_f = f
             best_individual = new_population[i]
 
-    return new_population, best_individual, best_f
+    return new_population, new_fitness, best_individual, best_f
 
 
 def nqueens_genetic(size, pop_size, max_generations, mutation_rate):
@@ -47,8 +52,9 @@ def nqueens_genetic(size, pop_size, max_generations, mutation_rate):
     max_fitness = (size * (size - 1)) / 2
    
     i = 0
+    fitness = list(map(evaluate, population))
     while i < max_generations:
-        population, best_individual, best_f = do_iteration(population, mutation_rate)
+        population, fitness, best_individual, best_f = do_iteration(population, fitness, mutation_rate, max_fitness)
         i += 1
         if best_f  == max_fitness:
             break
