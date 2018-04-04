@@ -58,11 +58,11 @@ def nqueens_genetic(size, pop_size, max_generations, mutation_rate):
 
 def main():
     size = 8 # number of queens
-    pop_size = 100
-    max_generations = 100
-    mutation_rate = 0.2
+    pop_size = 500
+    max_generations = 200
+    mutation_rate = 0.1
 
-    n = 1000
+    n = 100
     num_solutions = 0
     total_individuals = 0
     for i in tqdm(range(n)):
@@ -71,7 +71,7 @@ def main():
             num_solutions += 1
             total_individuals += num_individuals
 
-    print('{}% success, avg individuals: {}'.format(num_solutions * 100/n, total_individuals / num_solutions))
+    print('{:.1f}% success, avg individuals: {}'.format(num_solutions * 100/n, total_individuals / num_solutions))
 
 
 
