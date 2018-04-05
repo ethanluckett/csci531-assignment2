@@ -68,7 +68,7 @@ def main():
     max_generations = 200
     mutation_rate = 0.1
 
-    n = 100
+    n = 1000
     num_solutions = 0
     total_individuals = 0
     for i in tqdm(range(n)):

@@ -60,7 +60,7 @@ class HillClimb:
 
 def main():
     size = 8
-    n = 1000
+    n = 100000
 
     hc = HillClimb(size)
 
